@@ -4,7 +4,9 @@
 ### How to install
 ```
 $ npm install react-state-data
-// or
+```
+##### Or
+```
 $ yarn add react-state-data
 ```
 
