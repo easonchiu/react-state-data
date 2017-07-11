@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _dist = require('./dist');
+var _dist = require('./dist/index.js');
 
 var _dist2 = _interopRequireDefault(_dist);
 
