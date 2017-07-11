@@ -21,7 +21,15 @@ class View extends React.Component {
 
     this.setData({
       count: 0
-    })
+    }, this.watch)
+  }
+
+  watch() {
+    return {
+      count(val, oval) {
+        console.log(val, oval)
+      }
+    }
   }
 
   render() {

@@ -17,9 +17,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var data = function data(Comp) {
 	return function (props) {
 		Object.assign(Comp.prototype, {
-			setData: function setData(res) {
+			setData: function setData(res, watch) {
 				var _this = this;
 
+				// watch
+				var watchs = {};
+				if (typeof watch === 'function') {
+					watchs = watch();
+				}
+
+				// state
 				if (!this.state) {
 					this.state = _extends({}, res);
 				} else {
@@ -37,7 +44,12 @@ var data = function data(Comp) {
 					Object.defineProperty(_this.data, res, {
 						set: function set(val) {
 							if (th.state[res] !== val) {
-								th.setState(_defineProperty({}, res, val));
+								var ov = th.state[res];
+								th.setState(_defineProperty({}, res, val), function (e) {
+									if (watchs[res] && typeof watchs[res] === 'function') {
+										watchs[res](th.state[res], ov);
+									}
+								});
 							}
 						},
 						get: function get() {

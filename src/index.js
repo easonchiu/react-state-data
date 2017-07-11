@@ -2,7 +2,15 @@ import React from 'react'
 
 const data = Comp => props => {
 	Object.assign(Comp.prototype, {
-		setData(res) {
+		setData(res, watch) {
+
+			// watch
+			let watchs = {}
+			if (typeof watch === 'function') {
+				watchs = watch()
+			}
+
+			// state
 			if (!this.state) {
 				this.state = {
 					...res
@@ -22,8 +30,13 @@ const data = Comp => props => {
 				Object.defineProperty(this.data, res, {
 					set(val) {
 						if (th.state[res] !== val) {
+							const ov = th.state[res]
 							th.setState({
 								[res]: val
+							}, e => {
+								if (watchs[res] && typeof watchs[res] === 'function') {
+									watchs[res](th.state[res], ov)
+								}
 							})
 						}
 					},
@@ -32,6 +45,7 @@ const data = Comp => props => {
 					}
 				})
 			})
+			
 			
 		}
 	})
