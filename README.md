@@ -2,10 +2,10 @@
 
 
 ### How to install
-```js
-npm install react-state-data
+```
+$ npm install react-state-data
 // or
-yarn add react-state-data
+$ yarn add react-state-data
 ```
 
 ### How to use
