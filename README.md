@@ -2,14 +2,14 @@
 
 
 ### How to install
-```
+```js
 npm install react-state-data
 // or
 yarn add react-state-data
 ```
 
 ### How to use
-```
+```jsx
 import reactStateData from 'react-state-data'
 
 @reactStateData
@@ -36,7 +36,7 @@ export default View
 ```
 
 ### Don't like '@'? 
-```
+```jsx
 import reactStateData from 'react-state-data'
 
 class View extends React.Component {
