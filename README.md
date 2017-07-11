@@ -14,22 +14,22 @@ import reactStateData from 'react-state-data'
 
 @reactStateData
 class View extends React.Component {
-	constructor(props) {
-		super(props)
+  constructor(props) {
+    super(props)
 
-		this.setData({
-			count: 0
-		})
-	}
+    this.setData({
+      count: 0
+    })
+  }
 
-	render() {
-		return (
-			<div>
-				<p>{ this.data.count }</p>
-				<button onClick={ e => this.data.count++ }>click me</button>
-			</div>
-		)
-	}
+  render() {
+    return (
+      <div>
+        <p>{ this.data.count }</p>
+        <button onClick={ e => this.data.count++ }>click me</button>
+      </div>
+    )
+  }
 }
 
 export default View
@@ -40,9 +40,9 @@ export default View
 import reactStateData from 'react-state-data'
 
 class View extends React.Component {
-	...
-	...
-	...
+  ...
+  ...
+  ...
 }
 
 export default reactStateData(View)
