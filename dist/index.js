@@ -47,7 +47,7 @@ var data = function data(Comp) {
 								var ov = th.state[res];
 								th.setState(_defineProperty({}, res, val), function (e) {
 									if (watchs[res] && typeof watchs[res] === 'function') {
-										watchs[res](th.state[res], ov);
+										watchs[res].call(th, th.state[res], ov);
 									}
 								});
 							}

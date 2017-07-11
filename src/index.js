@@ -35,7 +35,7 @@ const data = Comp => props => {
 								[res]: val
 							}, e => {
 								if (watchs[res] && typeof watchs[res] === 'function') {
-									watchs[res](th.state[res], ov)
+									watchs[res].call(th, th.state[res], ov)
 								}
 							})
 						}
