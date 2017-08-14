@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-const data = Comp => props => {
-    Object.assign(Comp.prototype, {
-        setData(res, watch) {
+const reactStateData = Comp => {
 
+    class ComponentWithReactStateData extends Comp {
+
+        setData(obj) {
             // watch
             let watchs = {}
             if (typeof watch === 'function') {
@@ -12,13 +13,13 @@ const data = Comp => props => {
 
             // state
             if (!this.state) {
-                this.state = {
-                    ...res
-                }
-            } else {
-                Object.assign(this.state, res)
+                this.state = {}
             }
-            
+        
+            Object.keys(obj).forEach(res => {
+                this.state[res] = res
+            })
+
             if (this.data) {
                 console.warn('data must be null')
             }
@@ -26,7 +27,7 @@ const data = Comp => props => {
             this.data = {}
             const th = this
 
-            Object.keys(res).forEach(res => {
+            Object.keys(obj).forEach(res => {
                 Object.defineProperty(this.data, res, {
                     set(val) {
                         if (th.state[res] !== val) {
@@ -45,11 +46,14 @@ const data = Comp => props => {
                     }
                 })
             })
-            
-            
         }
-    })
-    return <Comp {...props} />
+
+        render() {
+            return super.render()
+        }
+
+    }
+    return ComponentWithReactStateData
 }
 
-export default data
+export default reactStateData

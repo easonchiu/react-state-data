@@ -4,7 +4,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
 var _react = require('react');
 
@@ -14,51 +16,78 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var data = function data(Comp) {
-    return function (props) {
-        Comp.prototype.setData = function(res, watch) {
-            var _this = this;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-            // watch
-            var watchs = {};
-            if (typeof watch === 'function') {
-                watchs = watch();
-            }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-            // state
-            if (!this.state) {
-                this.state = _extends({}, res);
-            } else {
-                Object.assign(this.state, res);
-            }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-            if (this.data) {
-                console.warn('data must be null');
-            }
+var reactStateData = function reactStateData(Comp) {
+    var ComponentWithReactStateData = function (_Comp) {
+        _inherits(ComponentWithReactStateData, _Comp);
 
-            this.data = {};
-            var th = this;
+        function ComponentWithReactStateData() {
+            _classCallCheck(this, ComponentWithReactStateData);
 
-            Object.keys(res).forEach(function (res) {
-                Object.defineProperty(_this.data, res, {
-                    set: function set(val) {
-                        if (th.state[res] !== val) {
-                            var ov = th.state[res];
-                            th.setState(_defineProperty({}, res, val), function (e) {
-                                if (watchs[res] && typeof watchs[res] === 'function') {
-                                    watchs[res].call(th, th.state[res], ov);
-                                }
-                            });
-                        }
-                    },
-                    get: function get() {
-                        return th.state[res];
-                    }
-                });
-            });
+            return _possibleConstructorReturn(this, (ComponentWithReactStateData.__proto__ || Object.getPrototypeOf(ComponentWithReactStateData)).apply(this, arguments));
         }
-        return _react2.default.createElement(Comp, props);
-    };
+
+        _createClass(ComponentWithReactStateData, [{
+            key: 'setData',
+            value: function setData(obj) {
+                var _this2 = this;
+
+                // watch
+                var watchs = {};
+                if (typeof watch === 'function') {
+                    watchs = watch();
+                }
+
+                // state
+                if (!this.state) {
+                    this.state = {};
+                }
+
+                Object.keys(obj).forEach(function (res) {
+                    _this2.state[res] = res;
+                });
+
+                if (this.data) {
+                    console.warn('data must be null');
+                }
+
+                this.data = {};
+                var th = this;
+
+                Object.keys(obj).forEach(function (res) {
+                    Object.defineProperty(_this2.data, res, {
+                        set: function set(val) {
+                            if (th.state[res] !== val) {
+                                var ov = th.state[res];
+                                th.setState(_defineProperty({}, res, val), function (e) {
+                                    if (watchs[res] && typeof watchs[res] === 'function') {
+                                        watchs[res].call(th, th.state[res], ov);
+                                    }
+                                });
+                            }
+                        },
+                        get: function get() {
+                            return th.state[res];
+                        }
+                    });
+                });
+            }
+        }, {
+            key: 'render',
+            value: function render() {
+                return _get(ComponentWithReactStateData.prototype.__proto__ || Object.getPrototypeOf(ComponentWithReactStateData.prototype), 'render', this).call(this);
+            }
+        }]);
+
+        return ComponentWithReactStateData;
+    }(Comp);
+
+    return ComponentWithReactStateData;
 };
 
-exports.default = data;
+exports.default = reactStateData;
