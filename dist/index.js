@@ -49,7 +49,7 @@ var reactStateData = function reactStateData(Comp) {
                 }
 
                 Object.keys(obj).forEach(function (res) {
-                    _this2.state[res] = res;
+                    _this2.state[res] = obj[res];
                 });
 
                 if (this.data) {

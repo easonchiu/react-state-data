@@ -17,7 +17,7 @@ const reactStateData = Comp => {
             }
         
             Object.keys(obj).forEach(res => {
-                this.state[res] = res
+                this.state[res] = obj[res]
             })
 
             if (this.data) {
