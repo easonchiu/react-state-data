@@ -34,7 +34,7 @@ var reactStateData = function reactStateData(Comp) {
 
         _createClass(ComponentWithReactStateData, [{
             key: 'setData',
-            value: function setData(obj) {
+            value: function setData(obj, watch) {
                 var _this2 = this;
 
                 // watch
@@ -87,6 +87,7 @@ var reactStateData = function reactStateData(Comp) {
         return ComponentWithReactStateData;
     }(Comp);
 
+    ComponentWithReactStateData.displayName = 'WithStateData(' + (Comp.displayName || Comp.name || 'Component') + ')';
     return ComponentWithReactStateData;
 };
 

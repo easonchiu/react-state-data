@@ -4,7 +4,7 @@ const reactStateData = Comp => {
 
     class ComponentWithReactStateData extends Comp {
 
-        setData(obj) {
+        setData(obj, watch) {
             // watch
             let watchs = {}
             if (typeof watch === 'function') {
@@ -53,6 +53,7 @@ const reactStateData = Comp => {
         }
 
     }
+    ComponentWithReactStateData.displayName = `WithStateData(${Comp.displayName || Comp.name || 'Component'})`
     return ComponentWithReactStateData
 }
 
