@@ -21,31 +21,31 @@ const reactStateData = Comp => {
             })
 
             if (this.data) {
-                console.warn('data must be null')
-            }
+                console.error('data must be null')
+            } else {
+                this.data = {}
+                const th = this
 
-            this.data = {}
-            const th = this
-
-            Object.keys(obj).forEach(res => {
-                Object.defineProperty(this.data, res, {
-                    set(val) {
-                        if (th.state[res] !== val) {
-                            const ov = th.state[res]
-                            th.setState({
-                                [res]: val
-                            }, e => {
-                                if (watchs[res] && typeof watchs[res] === 'function') {
-                                    watchs[res].call(th, th.state[res], ov)
-                                }
-                            })
+                Object.keys(obj).forEach(res => {
+                    Object.defineProperty(this.data, res, {
+                        set(val) {
+                            if (th.state[res] !== val) {
+                                const ov = th.state[res]
+                                th.setState({
+                                    [res]: val
+                                }, e => {
+                                    if (watchs[res] && typeof watchs[res] === 'function') {
+                                        watchs[res].call(th, th.state[res], ov)
+                                    }
+                                })
+                            }
+                        },
+                        get() {
+                            return th.state[res]
                         }
-                    },
-                    get() {
-                        return th.state[res]
-                    }
+                    })
                 })
-            })
+            }
         }
 
         render() {
